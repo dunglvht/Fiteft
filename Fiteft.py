@@ -1,17 +1,18 @@
-import os,sys
-import importlib
+import os
+import sys
+# import importlib
 # importlib.reload(function)
 import pandas as pd
 import numpy as np
+import function
 # import tools
 # from os import listdir
-import re
+# import re
 # put CV and CF range here
 # print('a')
 #import data
 path =  os.path.dirname(os.path.realpath(__file__))
 sys.path.append(path)
-import function
 # calculation
 class fiteft:
     def __init__(self,  experiment='ATLAS-CONF-2020-053') -> None:
@@ -90,7 +91,7 @@ class fiteft:
             ,uncertainty_theo = (self.obs[['+total_SM','-total_SM']].abs() if '+total_SM' in self.obs.columns else None)
             ,likelihood_type = self.attribute['likelihood_type']
             )
-    def l(self,cvecs): #Array(n,1)/Array(n,)/Array(1,n) -> Array(n,)
+    def l(self,cvecs): #Array(n,1)|Array(n,)|Array(1,n) -> Array(n,)
         if isinstance(cvecs,np.ndarray):
             C_df = pd.DataFrame(cvecs.reshape(-1,self.Ndf2.shape[1]), columns =  self.Ndf2.columns)
         if isinstance(cvecs,pd.DataFrame):
@@ -136,4 +137,3 @@ class fiteft:
             l2 = self.l_profile(cvecs2, loc, val).reshape(cvecs.shape[0],-1,cvecs.shape[1])
         return (l2-l1)/delta
     
-    # l2(np.zeros((10,2)))
