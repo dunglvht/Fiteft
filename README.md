@@ -62,7 +62,7 @@ array([[[1803.67453384]]])
 
 Detailed usage is provided via jupyter notebooks. 
 
-Full description of the file structures, functions is detailed in `mannual.pdf` file, section 4. 
+Full description of the file structures, functions is detailed in `mannual.pdf`.
 
 Full description of the physics will be soon provided after I finished defending my thesis.
 
