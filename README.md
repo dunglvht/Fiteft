@@ -1,6 +1,6 @@
 # Fiteft
 
-Fiteft (**fit** **e**ffective **f**ield **t**heory) is a Python package for calculating approximated likelihood function of Standard Model Effective Field Theory (SMEFT) parameters using experimental data. We also provide a method for calculating best-fit and confident interval of SMEFT parameters  
+Fiteft (**Fit** **e**ffective **f**ield **t**heory) is a Python package for calculating approximated likelihood function of Standard Model Effective Field Theory (SMEFT) parameters using experimental data. We also provide a method for calculating best-fit and confident interval of SMEFT parameters  
 
 # Requirements:
 
@@ -15,26 +15,19 @@ Optional, for the minimization of the likelihood functions
 # Usage
 ## Google colab notebook
 We provide a step-by-step intruction via a Google colab notebook. User can run the notebook directly through Google's machine.
-1. Open the [Colab notebook](https://colab.research.google.com/drive/1eUgw_YGFu6aDmy9yRLbxbCHCWnoglPDP?usp=sharing)
+1. Open the [Colab notebook](https://colab.research.google.com/drive/1GKJ92X3dtJ62XcHKzWMmIFQuWOvYV0oG?usp=sharing)
 2. Choose `File> Save a copy in Drive`. Now you can start run the notebook
-3. Run the setup cell
+3. Run the setup cell once, then you can run the cells in the example section from top to bottom.
 
-<img src="markdown_pngs/Screenshot from 2024-06-23 19-17-52.png" alt="setup" width="300"/>
-
-4. Full instruction is in the example section, you can run it cell by cell
-
-<img src="markdown_pngs/Screenshot from 2024-06-23 19-31-00.png" alt="example" width="300"/>
+Full instruction is in the example section.
 
 ## GitHub codespace
 We also provide a ready-to-run, line-by-line jupyter notebook `example.ipynb`. You can either run it on your machine, or run it via GitHub code space
 1. Go to the [repository page](https://github.com/dunglvht/Fiteft)
 2. Click `Code> Create codespace on master`
-
-<img src="markdown_pngs/Screenshot from 2024-06-23 19-54-52.png" alt="drawing" width="300"/>
-
 3. Open `example.ipynb` via left pannel which will open a jupyter notebook on VScode on GitHub codespace, you then can run the notebook directly on your browser.
 
-<img src="markdown_pngs/Screenshot from 2024-06-23 19-58-30.png" alt="drawing" width="400"/>
+<img src="markdown_pngs/codespace.png" alt="drawing" width="400"/>
 
 ## Using Python script
 You first need to clone the Fiteft project by running this command on your terminal
@@ -43,20 +36,16 @@ You first need to clone the Fiteft project by running this command on your termi
 git clone https://github.com/dunglvht/Fiteft
 ```
 
-In a Python script, you have to add `Fieft` to `sys.path`, then import `Fiteft, python, pandas`.
+In a Python script, you have to add `Fieft` to `sys.path`, import `Fiteft, python, pandas`, then create a `fiteft` object
 ```python
 import sys
 sys.path.append('<Fiteft_path>')
 import numpy as np
 import pandas as pd
 import Fiteft
+f = Fiteft.fiteft
 ```
-Next, create a `fiteft` object:
-```python
->>> f = Fiteft.fiteft(experiment='ATLAS-CONF-2020-053')
-Your input to the likelihood function is a DataFrame with at least one of these colums:
-['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB', 'c[2]HW-HB-HWB-HDD-uW-uB', 'c[3]HW-HB-HWB-HDD-uW-uB', 'c[1]Hu-Hd-Hq(1)', 'c[1]Hl(1)-He', 'c[1]Hl(3)-ll0', 'c[1]HG-uG-uH-top', 'c[2]HG-uG-uH-top', 'c[3]HG-uG-uH-top']
-```
+
 Now you can start running the `fiteft.likelihood()` function
 ```python
 >>> f.likelihood(pd.DataFrame(np.ones((2,2)), columns = ['c(3)Hq','c[1]Hl(3)-ll0']))
@@ -71,4 +60,10 @@ array([[[1803.67453384]]])
 ```
 # Documentation
 
-Detailed usage is provided via jupyter notebooks. Full description of the file structures, functions is detailed in `thesis.pdf` file, section 4.
+Detailed usage is provided via jupyter notebooks. 
+
+Full description of the file structures, functions is detailed in `mannual.pdf` file, section 4. 
+
+Full description of the physics will be soon provided after I finished defending my thesis.
+
+# 
