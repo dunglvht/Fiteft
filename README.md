@@ -43,8 +43,9 @@ sys.path.append('<Fiteft_path>')
 import numpy as np
 import pandas as pd
 import Fiteft
-f = Fiteft.fiteft
+f = Fiteft.fiteft()
 ```
+Note that the default argument is `ATLAS-CONF-2020-053`, which is the experiment where the data come from.
 
 Now you can start running the `fiteft.likelihood()` function
 ```python
