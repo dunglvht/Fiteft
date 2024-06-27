@@ -45,9 +45,9 @@ import pandas as pd
 import Fiteft
 f = Fiteft.fiteft()
 ```
-Note that the default argument is `ATLAS-CONF-2020-053`, which is the experiment where the data come from.
+Note that the default argument of `fiteft()` is `ATLAS-CONF-2020-053`, which is the name of the experiment whom data we are using.
 
-Now you can start running the `fiteft.likelihood()` function
+Now you can run the `fiteft.likelihood()` function right away
 ```python
 >>> f.likelihood(pd.DataFrame(np.ones((2,2)), columns = ['c(3)Hq','c[1]Hl(3)-ll0']))
 array([[[1803.67453384]],
@@ -63,7 +63,7 @@ array([[[1803.67453384]]])
 
 Detailed usage is provided via jupyter notebooks. 
 
-Full description of the file structures, functions is detailed in `mannual.pdf`.
+Full description of the file structures, functions is detailed in `mannual.pdf` file.
 
 Full description of the physics will be soon provided after I finished defending my thesis.
 
