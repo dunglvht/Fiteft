@@ -67,4 +67,11 @@ Full description of the file structures, functions is detailed in `mannual.pdf` 
 
 Full description of the physics will be soon provided after I finished defending my thesis.
 
-# 
+# Featured results
+We present our fit results in three definition of the likelihood function and compare them with some of the most recent SMEFT results from the ATLAS experiment: [ATLAS-CONF-2020-053](https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/CONFNOTES/ATLAS-CONF-2020-053), [ATLAS-CONF-2021-053](https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/CONFNOTES/ATLAS-CONF-2021-053), and [HIGG-2022-17](https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/PAPERS/HIGG-2022-17)
+
+The code used to produce these results is in the `validation.ipynb` file, or if you prefer Python script, `validation/{experiment_name}/validate.py` file. The calculation process will takes about 3-10 minutes on Github codespace, or 10-30 minutes on Google colab notebook.
+
+![alt text](validation/ATLAS-CONF-2020-053/fit_linear.png)
+![alt text](validation/ATLAS-CONF-2021-053/fit_linear.png)
+![alt text](validation/HIGG-2022-17/fit_non-linear.png)
