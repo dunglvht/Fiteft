@@ -11,6 +11,7 @@
 \usepackage{pythonhighlight,listings} %% for code
 \usepackage{anyfontsize} % for font
 \usepackage{slashed} % 
+\usepackage{forest} 
 % \usepackage{enumitem}
 \usepackage{empheq}% number in cases
 \usepackage{tabularx}% spreadout table
@@ -447,12 +448,54 @@ Fieft (\textbf{Fit e}ffective \textbf{f}ield \textbf{t}heory) is a tool written 
   \item Python 3.X
   \item numpy
   \item pandas
+  \item regex
 \end{itemize}
 Along with these mandatory libraries, another library that can be used to assist in minimization is:
 \begin{itemize}
   \item scipy
 \end{itemize}
- \section{Data structure}
+\section{Program structure}
+Fiteft source code is written in \texttt{Fiteft.py} file where we initialize the \texttt{fiteft} object, define different likelihood functions and their derivative. Different \texttt{likelihood()} functions in \texttt{fieft} object will paste numbers into \texttt{function.likelihood()} function to do the actual calculation. The graph below is the file structure of Fiteft
+
+\begin{forest}
+  for tree={
+    font=\ttfamily,
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    anchor=west,
+    calign=first,
+    edge path={
+      \noexpand\path [draw, \forestoption{edge}]
+      (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+      if n=1
+        {insert before={[,phantom]}}
+        {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+  }
+[Fiteft
+  [Fiteft.py
+  [likelihood()]
+  ]
+  [function.py
+  [likelihood()]
+  ]
+  [data/
+    [<experiment\_name>/
+      [observable.csv]
+      [parameterization.csv]
+      [correlation.csv]
+      [rotate.csv (optional)]
+    ]
+  ]
+]
+\end{forest}
+
+ \subsection{Data structure}
  \begin{figure}
    \resizebox{\textwidth}{!}{
      \input{obs_table.tex}
@@ -481,7 +524,7 @@ Along with these mandatory libraries, another library that can be used to assist
    \item [corelation\_theory.csv]: This file contains information on the theoretical correlation matrix.
    \item [rotation.csv]: A basis transformation matrix that converts from basis $c$ to basis $c'$ with fewer basis vectors, helping reduce the number of parameters during data fitting.
  \end{description}
- \subsection{observable.csv}
+ \subsubsection{observable.csv}
  This data file has two important parts:
  \begin{description}
    \item[{\color{red}index}]: Five important columns are required:
@@ -526,7 +569,7 @@ Along with these mandatory libraries, another library that can be used to assist
  \label{table:signature}
  \end{table}
  
- \subsection{correlation.csv}
+ \subsubsection{correlation.csv}
  
  \begin{figure}[!h]
  \resizebox{\textwidth}{!}{
@@ -542,7 +585,7 @@ Along with these mandatory libraries, another library that can be used to assist
  \end{figure}
  
 Figure  \ref{fig:cor_table} is an example of the \verb|correlation.csv| file, which contains data on the correlation between any two bins. Each bin is a combination of a Higgs boson production channel and a Higgs boson decay channel. It is easy to see that the correlation of a bin with itself is 1, representing the diagonal of the matrix. This must be a square matrix with the number of rows and columns equal to the number of measured physical observables in the \verb|obersvable.csv| file. Each bin is represented by a combination of the \verb|production| and \verb|decay|, names, and each combination must correspond to a combination in the \verb|observable.csv|file.
- \subsection{parametrization.csv}
+ \subsubsection{parametrization.csv}
  \begin{table}
    \resizebox{\textwidth}{!}{
      \input{param_table.tex}
@@ -571,12 +614,12 @@ Figure  \ref{fig:cor_table} is an example of the \verb|correlation.csv| file, wh
    \texttt{+ 0.0 c(31)qq+ 0.0 cuu+ 0.0 c(1)uu+ 0.0 c(1)ud+ 0.0 c(8)ud + 0.0 c(1)qu}\\ \nonumber
    &\texttt{+ 0.0 c(8)qu+ 0.0 c(1)qd+ 0.0 c(8)qd+ 0.0 cW+ 0.0 cdH+ 0.0 ceH.}
  \end{align}
- \subsection{rotate.csv (optional)}
+ \subsubsection{rotate.csv (optional)}
  The file contains data on the transformation matrix from basis $c$ to basis $c'$, or in other words, the matrix $\overline{\b M_{\lambda >a}}$, for example, table \ref{table:rotation_matrix}. You can choose one of the two tables, whichever you prefer. The use of a rotation matrix is optional, but it may not be possible to fit (very large confidence intervals) for some parameters.
  \clearpage
- \section{The fiteft object}
- \subsection{Initialize the fiteft}
- For more information about initializing \verb|fiteft|, refer to the example in section \ref{vuxed-dux1ee5}.
+ \subsection{The fiteft object}
+ \subsubsection{Initialize the fiteft}
+ For more information about initializing \verb|fiteft|, refer to the example in subsection \ref{vuxed-dux1ee5}.
  \begin{minted}[mathescape,linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
   fiteft(experiment='ATLAS-CONF-2020-053')
   \end{minted}
@@ -593,7 +636,7 @@ Figure  \ref{fig:cor_table} is an example of the \verb|correlation.csv| file, wh
 Your input to the likelihood function is a DataFrame with one of these colums:
 ['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB', 'c[2]HW-HB-HWB-HDD-uW-uB', 'c[3]HW-HB-HWB-HDD-uW-uB', 'c[1]Hu-Hd-Hq(1)', 'c[1]Hl(1)-He', 'c[1]Hl(3)-ll0', 'c[1]HG-uG-uH-top', 'c[2]HG-uG-uH-top', 'c[3]HG-uG-uH-top']
 \end{minted}
-\subsection{Changing attribute of the likelihood function}
+\subsubsection{Changing attribute of the likelihood function}
 The user can change the type of likelihood and the method of computing the likelihood through 
 \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
 fiteft.attribute.update(dict)
@@ -620,7 +663,7 @@ Here are examples of how to change the properties of the likelihood function wit
 a.attribute.update({'likelihood_type' : 0, 'devide' : False})
 a.attribute.update({'likelihood_type' : 'variable Gaussian 0'})
 \end{minted}
-\subsection{Accessible variable }
+\subsubsection{Accessible variable }
 Here are the objects involved in data fitting that users can access after initializing the Fiteft object. While users don't need to pay attention to these values to use Fiteft, they provide convenience for observing the data of a specific experiment.
 \begin{description}
   \item[fiteft.C,\ fiteft.C2]: pandas Index\\
@@ -699,9 +742,9 @@ gg->H->Bgaga,1-jet,120<=pTH<200GeV H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.01
 
 
 
-\section{Computing function of Fiteft}
+\subsection{Computing function of Fiteft}
 
-\subsection{\text{fiteft.likelihood}}
+\subsubsection{\text{fiteft.likelihood}}
 \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
 fiteft.likelihood(C_df)
 \end{minted}
@@ -779,7 +822,7 @@ array([[[  52.22424586]],
        [[1911.79581288]]])
   \end{minted}
 
-\subsection{fiteft.l}
+\subsubsection{fiteft.l}
 The purpose of this function is to make it easier to enter data without having to enter the names of the parameters each time the likelihood is calculated.
 \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
 fiteft.l(cvecs)
@@ -845,7 +888,7 @@ array([[[   39.28929247]],
 \end{minted}
 
 
-\subsection{fiteft.dl}
+\subsubsection{fiteft.dl}
 This is a function for calculating the derivative $\mathcal{L}(\b c)$.
 \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
 fiteft.dl(cvecs, delta =1.49e-08)
@@ -913,7 +956,7 @@ array([[[1.74947686e+01, 1.19368262e+03]],
 
        [[6.14279192e+02, 5.29040790e+04]]])
 \end{minted}
-\subsection{fiteft.l\_profile}
+\subsubsection{fiteft.l\_profile}
 \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
 fiteft.l_profile(cvecs, loc, val)
 \end{minted}
@@ -983,7 +1026,7 @@ We obtain three identical results, where we set $c'_i$ as the first value - posi
 
 
 
-\subsection{fiteft.dl\_profile}
+\subsubsection{fiteft.dl\_profile}
 \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
   fiteft.dl_profile(cvecs, loc, val, delta=1.49e-08)
   \end{minted}
@@ -1061,7 +1104,7 @@ array([[[ 2.32282750e+03, -1.91485358e+02,  1.50639485e+01,
 
 
  \clearpage
-%  \subsection{Example}
+%  \subsubsection{Example}
 %  Ở phần ví dụ này, chúng tôi sẽ ví dụ về việc sử dụng FITEFT, với một kết quả cụ thể là \verb|ATLAS-CONF-2020-053|
 %  đầu tiên chúng ta \verb|import| những thư viện cần thiết là \verb|numpy,panda,Fieft| và khởi tạo đối tượng Fiteft
 % \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
@@ -1233,4 +1276,5 @@ array([[[ 2.32282750e+03, -1.91485358e+02,  1.50639485e+01,
 %   11.127542734146118
 %   >>> res
 %   \end{minted}
+\printbibliography
 \end{document}
