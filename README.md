@@ -11,6 +11,7 @@ WARNING: This is the first beta version, which has NOT been well tested. Use it 
 * Python 3.10 (or 3.X)
 * numpy (preferable newest version)
 * pandas (preferable newest version)
+* re
 
 Optional, for the minimization of the likelihood functions
 
