@@ -4,6 +4,8 @@ Fiteft (**Fit** **e**ffective **f**ield **t**heory) is a Python package for calc
 
 Fiteft is distributed under the GNU General Public License (GPL) version 3 (see the LICENSE file). This ensures that the source code will be available to users, grants them the freedom to use and modify the program and sets out the conditions under which it can be redistributed.
 
+WARNING: This is the first beta version, which has NOT been well tested. Use it with care and at your own risk.
+
 # Requirements:
 
 * Python 3.10 (or 3.X)
