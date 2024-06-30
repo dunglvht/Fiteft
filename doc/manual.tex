@@ -1,0 +1,1236 @@
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{left=3.5cm,right=2cm,top=3.5cm,bottom=3cm}
+\usepackage[style=phys,sorting=none,backend=biber,doi=false,backref=true,labeldate=year,biblabel=brackets,isbn=false,block=space,backrefstyle=two,eprint=true]{biblatex}
+\usepackage{booktabs,multirow}
+\usepackage{mathtools,amsmath,graphicx,empheq,slashed,color,hyperref,geometry}
+\usepackage{minted}%for code
+\usepackage[table]{xcolor}% color table
+\usepackage{tikz}% drawing
+\usepackage{pythonhighlight,listings} %% for code
+\usepackage{anyfontsize} % for font
+\usepackage{slashed} % 
+% \usepackage{enumitem}
+\usepackage{empheq}% number in cases
+\usepackage{tabularx}% spreadout table
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+% \usepackage{adjustbox}% rotate table
+% \usepackage[final]{pdfpages}% include pdf
+% \setsansfont{Calibri}%for code
+% \setmonofont{Consolas}%for code
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=cyan,citecolor=red}
+% \setlist[description]{leftmargin=2cm,labelindent=1cm}
+\setlength{\unitlength}{1mm}
+\newlength{\mywidth}\setlength{\mywidth}{14.5cm}
+\addbibresource{cite.bib}
+\newcommand{\n}{\nonumber \\}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\du}{d_\mathcal{U}}
+\newcommand{\oo}{\mathcal{O}}
+\newcommand{\epem}{e^+e^-}
+\newcommand{\nn}{\nonumber}
+\def\b#1{\boldsymbol{\rm #1}}
+\newcommand{\BR}{\mathrm{BR}}
+\newcommand{\SM}{\text{SM}}
+\newcommand{\SMEFT}{\text{SMEFT}}
+\newcommand{\E}{\text{E}}
+
+% \newcommand{\b}[1]{\boldsymbol{\rm #1}}
+% \newcommand{\vec}[1]{\boldsymbol{\#1}}
+\newcommand{\hreff}[1]{\href{mailto:#1}{#1}}
+\renewcommand{\arraystretch}{1.5}
+% \renewbibmacro{in:}{}
+% \AtEveryBibitem{\clearfield{pages}}
+% \newbibmacro{string+doi}[1]{%
+%   \iffieldundef{doi}{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}	
+% \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\usepackage[breakable]{tcolorbox}
+\usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+
+
+% Basic figure setup, for now with no caption control since it's done
+% automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+\usepackage{graphicx}
+% Keep aspect ratio if custom image width or height is specified
+\setkeys{Gin}{keepaspectratio}
+% Maintain compatibility with old templates. Remove in nbconvert 6.0
+\let\Oldincludegraphics\includegraphics
+% Ensure that by default, figures have no caption (until we provide a
+% proper Figure object with a Caption API and a way to capture that
+% in the conversion process - todo).
+\usepackage[font=large,labelfont=bf]{caption}
+% \DeclareCaptionFormat{nocaption}{}
+% \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+\usepackage{float}
+\floatplacement{figure}{H} % forces figures to be placed at the correct location
+\usepackage{xcolor} % Allow colors to be defined
+\usepackage{enumerate} % Needed for markdown enumerations to work
+\usepackage{geometry} % Used to adjust the document margins
+\usepackage{amsmath} % Equations
+\usepackage{amssymb} % Equations
+\usepackage{textcomp} % defines textquotesingle
+% Hack from http://tex.stackexchange.com/a/47451/13684:
+\AtBeginDocument{%
+    \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+}
+\usepackage{upquote} % Upright quotes for verbatim code
+\usepackage{eurosym} % defines \euro
+
+\usepackage{iftex}
+\ifPDFTeX
+    \usepackage[T1]{fontenc}
+    \IfFileExists{alphabeta.sty}{
+          \usepackage{alphabeta}
+      }{
+          \usepackage[mathletters]{ucs}
+          \usepackage[utf8x]{inputenc}
+      }
+\else
+    \usepackage{fontspec}
+    \usepackage{unicode-math}
+\fi
+
+\usepackage{fancyvrb} % verbatim replacement that allows latex
+\usepackage{grffile} % extends the file name processing of package graphics
+                     % to support a larger range
+\makeatletter % fix for old versions of grffile with XeLaTeX
+\@ifpackagelater{grffile}{2019/11/01}
+{
+  % Do nothing on new versions
+}
+{
+  \def\Gread@@xetex#1{%
+    \IfFileExists{"\Gin@base".bb}%
+    {\Gread@eps{\Gin@base.bb}}%
+    {\Gread@@xetex@aux#1}%
+  }
+}
+\makeatother
+\usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+\adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+% The hyperref package gives us a pdf with properly built
+% internal navigation ('pdf bookmarks' for the table of contents,
+% internal cross-reference links, web links for URLs, etc.)
+\usepackage{hyperref}
+% The default LaTeX title has an obnoxious amount of whitespace. By default,
+% titling removes some of it. It also provides customization options.
+\usepackage{titling}
+\usepackage{longtable} % longtable support required by pandoc >1.10
+\usepackage{booktabs}  % table support for pandoc > 1.12.2
+\usepackage{array}     % table support for pandoc >= 2.11.3
+\usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+\usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+\usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                            % normalem makes italics be italics, not underlines
+\usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+\usepackage{mathrsfs}
+\setlist[description]{leftmargin=2cm,labelindent=1cm}
+
+
+
+% Colors for the hyperref package
+\definecolor{urlcolor}{rgb}{0,.145,.698}
+\definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+\definecolor{citecolor}{rgb}{.12,.54,.11}
+
+% ANSI colors
+\definecolor{ansi-black}{HTML}{3E424D}
+\definecolor{ansi-black-intense}{HTML}{282C36}
+\definecolor{ansi-red}{HTML}{E75C58}
+\definecolor{ansi-red-intense}{HTML}{B22B31}
+\definecolor{ansi-green}{HTML}{00A250}
+\definecolor{ansi-green-intense}{HTML}{007427}
+\definecolor{ansi-yellow}{HTML}{DDB62B}
+\definecolor{ansi-yellow-intense}{HTML}{B27D12}
+\definecolor{ansi-blue}{HTML}{208FFB}
+\definecolor{ansi-blue-intense}{HTML}{0065CA}
+\definecolor{ansi-magenta}{HTML}{D160C4}
+\definecolor{ansi-magenta-intense}{HTML}{A03196}
+\definecolor{ansi-cyan}{HTML}{60C6C8}
+\definecolor{ansi-cyan-intense}{HTML}{258F8F}
+\definecolor{ansi-white}{HTML}{C5C1B4}
+\definecolor{ansi-white-intense}{HTML}{A1A6B2}
+\definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+\definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+% common color for the border for error outputs.
+\definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+% commands and environments needed by pandoc snippets
+% extracted from the output of `pandoc -s`
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+
+% Additional commands for more recent versions of Pandoc
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+% Define a nice break command that doesn't care if a line doesn't already
+% exist.
+\def\br{\hspace*{\fill} \\* }
+% Math Jax compatibility definitions
+\def\gt{>}
+\def\lt{<}
+\let\Oldtex\TeX
+\let\Oldlatex\LaTeX
+\renewcommand{\TeX}{\textrm{\Oldtex}}
+\renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+% Document parameters
+% Document title
+\title{example}
+
+
+
+
+
+
+
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+\let\PY@ul=\relax \let\PY@tc=\relax%
+\let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+\PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+\PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+% For linebreaks inside Verbatim environment from package fancyvrb.
+\makeatletter
+    \newbox\Wrappedcontinuationbox
+    \newbox\Wrappedvisiblespacebox
+    \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+    \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+    \newcommand*\Wrappedcontinuationindent {3ex }
+    \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+    % Take advantage of the already applied Pygments mark-up to insert
+    % potential linebreaks for TeX processing.
+    %        {, <, #, %, $, ' and ": go to next line.
+    %        _, }, ^, &, >, - and ~: stay at end of broken line.
+    % Use of \textquotesingle for straight quote.
+    \newcommand*\Wrappedbreaksatspecials {%
+        \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+        \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+        \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+        \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+        \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+        \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+        \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+        \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+        \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+        \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+        \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+        \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+        \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+        \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+    }
+    % Some characters . , ; ? ! / are not pygmentized.
+    % This macro makes them "active" and they will insert potential linebreaks
+    \newcommand*\Wrappedbreaksatpunct {%
+        \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+        \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+        \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+        \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+        \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+        \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+        \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+        \catcode`\.\active
+        \catcode`\,\active
+        \catcode`\;\active
+        \catcode`\:\active
+        \catcode`\?\active
+        \catcode`\!\active
+        \catcode`\/\active
+        \lccode`\~`\~
+    }
+\makeatother
+
+\let\OriginalVerbatim=\Verbatim
+\makeatletter
+\renewcommand{\Verbatim}[1][1]{%
+    %\parskip\z@skip
+    \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+    \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+    \def\FancyVerbFormatLine ##1{\hsize\linewidth
+        \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+            \doublehyphendemerits\z@\finalhyphendemerits\z@
+            \strut ##1\strut}%
+    }%
+    % If the linebreak is at a space, the latter will be displayed as visible
+    % space at end of first line, and a continuation symbol starts next line.
+    % Stretch/shrink are however usually zero for typewriter font.
+    \def\FV@Space {%
+        \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+        \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+        {\kern\fontdimen2\font}%
+    }%
+
+    % Allow breaks at special characters using \PYG... macros.
+    \Wrappedbreaksatspecials
+    % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+    \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+}
+\makeatother
+
+% Exact colors from NB
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+
+% prompt
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+}
+
+
+
+% Prevent overflowing lines due to hard-to-break entities
+\sloppy
+% Setup hyperref package
+\hypersetup{
+  breaklinks=true,  % so long urls are correctly broken across lines
+  colorlinks=true,
+  urlcolor=urlcolor,
+  linkcolor=linkcolor,
+  citecolor=citecolor,
+  }
+% Slightly bigger margins than the latex defaults
+
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+
+
+%%%%%
+
+\begin{document}
+\fontsize{20pt}{\baselineskip}\selectfont
+\begin{center}
+  Fiteft manual
+\end{center}
+\fontsize{12pt}{\baselineskip}\selectfont
+\tableofcontents
+\clearpage
+Fieft (\textbf{Fit e}ffective \textbf{f}ield \textbf{t}heory) is a tool written entirely in Python with the purpose of computing an approximate likelihood function, the following requirements must be met:
+\begin{itemize}
+  \item Python 3.X
+  \item numpy
+  \item pandas
+\end{itemize}
+Along with these mandatory libraries, another library that can be used to assist in minimization is:
+\begin{itemize}
+  \item scipy
+\end{itemize}
+ \section{Data structure}
+ \begin{figure}
+   \resizebox{\textwidth}{!}{
+     \input{obs_table.tex}
+     }\\
+     \begin{tikzpicture}\useasboundingbox (0,0cm) -- (0,0cm);
+       \draw[rounded corners,red,ultra thick] (0.0\mywidth, 0\baselineskip)  rectangle (0.7\mywidth, 8.\baselineskip) {};
+       \draw[rounded corners,blue,ultra thick] (0.7\mywidth, 7\baselineskip)  rectangle (1.14\mywidth, 8.\baselineskip) {};
+       \node[] at (-1cm,2cm) {\color{red} \textbf{index}};
+       \node[] at (13cm,5cm) {\color{blue} \textbf{column}};
+     \end{tikzpicture}
+     \caption{An example of a \texttt{observable.csv} file, representing the first 10 measurement results of the experiment ATLAS-2021-053\cite{ATLAS:2021vrm}.}
+ \end{figure}
+ 
+ The Fiteft database is stored in the directory
+ \begin{minted}[mathescape,linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+   Fiteft/data/{experiment_name}
+ \end{minted}
+ and consists of three main files:
+ \begin{description}
+   \item[observable.csv]: This file contains data on physical observables and errors provided by the experiment.
+   \item[correlation.csv]: This file contains information on the correlation matrix provided by the experiment.
+   \item[parametrization.csv]: This file contains information on the parameter matrix, which can be provided by the experimental paper or by the user for any model.
+ \end{description}
+ Other auxiliary files may also be present, and the program can run without these files. They provide additional information to help improve the data fitting results.
+ \begin{description} 
+   \item [corelation\_theory.csv]: This file contains information on the theoretical correlation matrix.
+   \item [rotation.csv]: A basis transformation matrix that converts from basis $c$ to basis $c'$ with fewer basis vectors, helping reduce the number of parameters during data fitting.
+ \end{description}
+ \subsection{observable.csv}
+ This data file has two important parts:
+ \begin{description}
+   \item[{\color{red}index}]: Five important columns are required:
+   \begin{itemize}
+   \item production: Name of the Higgs boson production channels in stage 1.2. Names can be arbitrary, either letters or numbers. The name \verb|production+decay| in one row must not match \verb|production+decay| in another row.
+   \item decay: Name of the Higgs boson decay channels for the corresponding bin. Names can be arbitrary, either letters or numbers. The name \verb|production+decay| in one row must not match \verb|production+decay| in another row.
+   \item acceptance: Type of acceptance used for the bin corresponding to the \verb|decay| channel. Names can be arbitrary and should not match \verb|decay|. A simple naming convention is "\{\dots\}\verb|decay|" where \{\dots\} can be any character(s).
+   \item signature: Characteristics of the experimental result of the production+decay channel. We allow some specific characteristics listed in \ref{table:signature}.
+  \end{itemize}
+  \item[{\color{blue} column}]: The following information is needed:
+   \begin{itemize}
+         \item central: Central value
+         \item +total: Total error on the right side
+         \item --total: Total error on the left side
+   \end{itemize}
+   Predicted values from the SM depend on the signature of the measurement results, and these predictions are listed in \ref{table:signature} 
+   \begin{itemize}
+         \item central\_SM: SM theoretical prediction value
+        \end{itemize}
+    Extra data that help improve the fitting procedure:
+        \begin{itemize}
+          \item +syst: Systematic error on the right side
+          \item --syst: Systematic error on the left side
+          \item +stat: Statistical error on the right side
+          \item --stat: Statistical error on the left side
+          \item --total\_SM: SM theoretical prediction total error on the left side
+          \item +total\_SM:  SM theoretical prediction total error on the right side
+   \end{itemize}
+  \end{description}
+ 
+  \begin{table}
+   \begin{tabular}{|l|l|l|l|}
+ \hline
+ Physical quantity & Signature & observable predicted by the SM \\[0.25cm] \hline
+ $(\sigma_i \times B_j)$  & CS*BR & $(\sigma_i \times B_j)_{SM}$  \\[0.25cm] \hline
+ $(\sigma_i \times B_j) \text{normalized to SM}$ & CS*BR/(CS\_SM*BR\_SM)  & 1 \\
+ Signal strength && \\ [0.25cm] \hline
+ $(\sigma_i \times B_\mathrm{Z} )/B_\mathrm{Z}^{SM}$ & CS*BR\_ZZ/BR\_ZZSM  & $\sigma^{\SM}_i$\\[0.25cm] \hline
+ $B_i/B_{\rm H\to ZZ}$ & BR/BR\_ZZ &  $(B_i/B_\mathrm{Z})_{SM}$ \\ \hline
+ \end{tabular}
+ \caption{Here are the currently supported signature in Fiteft, the names to be filled in the signature column in the \texttt{observable.csv} file, and the additional predicted values that need to be provided by the user.}
+ \label{table:signature}
+ \end{table}
+ 
+ \subsection{correlation.csv}
+ 
+ \begin{figure}[!h]
+ \resizebox{\textwidth}{!}{
+ \input{cor_exp_table.tex}
+ }\\
+ \begin{tikzpicture}\useasboundingbox (0,0cm) -- (0,0cm);
+   \draw[rounded corners,red,ultra thick] (0.0\mywidth, 0\baselineskip)  rectangle (0.31\mywidth, 6.5\baselineskip) {};
+   \draw[rounded corners,red,ultra thick] (0.31\mywidth, 5.5\baselineskip)  rectangle (1.14\mywidth, 6.5\baselineskip) {};
+   \node[] at (-1cm,2cm) {\color{red} \textbf{index}};
+   \node[] at (12cm,7.0\baselineskip) {\color{red} \textbf{index}$^\top$};
+ \end{tikzpicture}
+ \caption{An example of a \texttt{corelation.csv} file, representing the first 10 rows, 5 columns of the experiment ATLAS-CONF-2020-053 \cite{ATLAS:2020naq}. \label{fig:cor_table}}
+ \end{figure}
+ 
+Figure  \ref{fig:cor_table} is an example of the \verb|correlation.csv| file, which contains data on the correlation between any two bins. Each bin is a combination of a Higgs boson production channel and a Higgs boson decay channel. It is easy to see that the correlation of a bin with itself is 1, representing the diagonal of the matrix. This must be a square matrix with the number of rows and columns equal to the number of measured physical observables in the \verb|obersvable.csv| file. Each bin is represented by a combination of the \verb|production| and \verb|decay|, names, and each combination must correspond to a combination in the \verb|observable.csv|file.
+ \subsection{parametrization.csv}
+ \begin{table}
+   \resizebox{\textwidth}{!}{
+     \input{param_table.tex}
+     }\\
+     \includegraphics{colorbar_param_example.pdf}\\
+     \begin{tikzpicture}\useasboundingbox (0,0cm) -- (0,0cm);
+       \draw[rounded corners,red,ultra thick] (0.0\mywidth, 7.2\baselineskip)  rectangle (0.4\mywidth, 39\baselineskip) {};
+       \draw[rounded corners,red,ultra thick] (0.0\mywidth, 5.\baselineskip)  rectangle (0.4\mywidth, 7.2\baselineskip) {};
+       \draw[rounded corners,red,ultra thick] (0.0\mywidth, 4.5\baselineskip)  rectangle (0.4\mywidth, 5.\baselineskip) {};
+       \node[] at (-1cm,10cm) {\color{red} \textbf{prod. $i$}};
+       \node[] at (-1cm, 3.2cm) {\color{red} \textbf{decay $j$}};
+       \node[] at (-1cm, 2.2cm) {\color{red} \textbf{decay H}};
+     \end{tikzpicture}
+     \caption{An example of a \texttt{parametrization.csv}, file, which represents the linear impact of SMEFT parameters on the production and decay channels of the Higgs boson for the ATLAS-CONF-2020-053 \cite{ATLAS:2020naq} experiment. This table includes the impact of 34 SMEFT parameters. \label{table:param_table}}
+ \end{table}
+ Table \ref{table:param_table} lists a subset of the parameters from the influence matrix $\b A$ of SMEFT parameters, with a total of 34 parameters. In the column labeled \verb|bin|, surrounded by a red rectangle with the name {\color{red}\textbf{prod. $i$}}, we need to ensure that we fully list the linear parametrization of \textbf{all} production channels \verb|production|. The column {\color{red}\textbf{decay $j$}} lists all decay channels \verb|decay|. These are also present in the \verb|acceptance| column in the \verb|observable.csv| file. Another mandatory requirement is the total decay parameterization of the Higgs boson $(\b{a}_{\rm H}^{\rm decay})^\top$. All the numbers here represent the linear influence of the parameter on the measurement bin in question. For example, for row 1 column 1 of Table \ref{table:param_table}, , we can infer that:
+ \begin{align}
+   \rm \frac{\sigma^{SMEFT}(gg->H,0jet,pTH<10GeV)|_{cHbox=1}}{\sigma^\SM(gg->H,0jet,pTH<10GeV)}= 1+0.12,
+ \end{align}
+ where we only keep the interference term $0.12$. From the first row, we can infer that:
+ \begin{align}
+   &\rm \frac{\sigma^{SMEFT}(gg\to H,0jet,p^T_H<10GeV)}{\sigma^\SM(gg\to H,0jet,p^T_H<10GeV)} \nonumber \\ \nonumber&= 1+ \texttt{0.12 cHbox -0.0294 cHDD+ 42.0 cHG -0.117 cuH+ 1.59 cuG}\\ \nonumber
+   &\texttt{-0.117 c(3)Hl + 0.0587 c0ll+ 0.0 cHWB+ 0.0 c(1)Hl+ 0.0 cHe+ 0.0 c(1)Hq}\\ \nonumber
+   &\texttt{+ 0.0 c(3)Hq+ 0.0 cHu+ 0.0 cHd+ 0.0 cHW+ 0.0 cHB+ 0.0 cG}\\ \nonumber
+   &\texttt{+ 0.0 cuW+ 0.0 cuB+ 0.0 cqq+ 0.0 c(1)qq+ 0.0 c(3)qq}\\ \nonumber&
+   \texttt{+ 0.0 c(31)qq+ 0.0 cuu+ 0.0 c(1)uu+ 0.0 c(1)ud+ 0.0 c(8)ud + 0.0 c(1)qu}\\ \nonumber
+   &\texttt{+ 0.0 c(8)qu+ 0.0 c(1)qd+ 0.0 c(8)qd+ 0.0 cW+ 0.0 cdH+ 0.0 ceH.}
+ \end{align}
+ \subsection{rotate.csv (optional)}
+ The file contains data on the transformation matrix from basis $c$ to basis $c'$, or in other words, the matrix $\overline{\b M_{\lambda >a}}$, for example, table \ref{table:rotation_matrix}. You can choose one of the two tables, whichever you prefer. The use of a rotation matrix is optional, but it may not be possible to fit (very large confidence intervals) for some parameters.
+ \clearpage
+ \section{The fiteft object}
+ \subsection{Initialize the fiteft}
+ For more information about initializing \verb|fiteft|, refer to the example in section \ref{vuxed-dux1ee5}.
+ \begin{minted}[mathescape,linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+  fiteft(experiment='ATLAS-CONF-2020-053')
+  \end{minted}
+\textbf{Argument}
+\begin{description}
+ \item[experiment]: string\\
+ The name of the directory containing the data for an experiment, located in the directory \verb|Fiteft/data|.
+\end{description}
+\textbf{Return}: fiteft object.\\
+\textbf{Example}\\
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> from Fiteft import fiteft
+>>> a = fiteft(experiment='ATLAS-CONF-2020-053')
+Your input to the likelihood function is a DataFrame with one of these colums:
+['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB', 'c[2]HW-HB-HWB-HDD-uW-uB', 'c[3]HW-HB-HWB-HDD-uW-uB', 'c[1]Hu-Hd-Hq(1)', 'c[1]Hl(1)-He', 'c[1]Hl(3)-ll0', 'c[1]HG-uG-uH-top', 'c[2]HG-uG-uH-top', 'c[3]HG-uG-uH-top']
+\end{minted}
+\subsection{Changing attribute of the likelihood function}
+The user can change the type of likelihood and the method of computing the likelihood through 
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+fiteft.attribute.update(dict)
+\end{minted}
+\textbf{Argument}: Python dictionary \verb|{key: value}|.
+\begin{description}
+  \item[key]: \verb|string|, can be a value between \verb|'likelihood_type'| or \verb|'devide'|:
+  \item[value] 
+  \verb|likelihood_type|: The type of likelihood can be chosen from the following options:['variable Gaussian 0', 'vg0', 0], ['variable Gaussian 1', 'vg1', 1], ['normal Gaussian', 'ng', 2]. Each of these values serves the same function and represents a different method of computing the likelihood. The specific types of likelihood are explained in detail in Equations \eqref{eqn:delta-y0}, \eqref{eqn:delta-y1}, \eqref{eqn:delta-y2}, respectively. The default setting for this property is \verb|'normal Gaussian'|.\\
+  \begin{empheq}[left={\b{\Delta_y}= \empheqlbrace}]{align}
+   &(\b{\Delta^+_y+\Delta^-_y})/2,\ \label{eqn:delta-y0}\\
+      &    \sqrt{\b{\dfrac{2\Delta^+\circ \Delta^-}{\Delta^++ \Delta^-}+\dfrac{2\Delta^+ - \Delta^-}{\Delta^++ \Delta^-}\circ (y_c-y_\SM)}},\  \label{eqn:delta-y1}\\
+      &    \sqrt{\b{\Delta^+\circ \Delta^-+(\Delta^+- \Delta^-)\circ(y_c-y_\SM)}},\ \label{eqn:delta-y2}
+  \end{empheq}
+  \verb|devide|: The user can choose between \verb|True| and \verb|False| to represent nonlinear and linear parameterization, respectively. Both choices correspond to two different methods of theoretical prediction parameterization described in Equations \eqref{eqn:general_parametrize1}, \eqref{eqn:general_parametrize2}. The default setting for this property is \verb|False|, which corresponds to Equation \eqref{eqn:general_parametrize2}.
+  \begin{empheq}[left = {\b{y}^{\rm SMEFT}(\b c) =\empheqlbrace}]{align}
+   &\b{y}_\SM\circ (1 + \b N.\b c)/(1 + \b D.\b c)\label{eqn:general_parametrize1}\\
+   &\b{y}_\SM\circ (1 + \b{(N-D)}.\b c),\label{eqn:general_parametrize2}
+ \end{empheq}
+\end{description}
+\textbf{Example}\\
+Here are examples of how to change the properties of the likelihood function with the likelihood type set to \texttt{variable Gaussian 0} in two different ways
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+a.attribute.update({'likelihood_type' : 0, 'devide' : False})
+a.attribute.update({'likelihood_type' : 'variable Gaussian 0'})
+\end{minted}
+\subsection{Accessible variable }
+Here are the objects involved in data fitting that users can access after initializing the Fiteft object. While users don't need to pay attention to these values to use Fiteft, they provide convenience for observing the data of a specific experiment.
+\begin{description}
+  \item[fiteft.C,\ fiteft.C2]: pandas Index\\
+  Names of the parameters in the bases $\b c$, $\b c'$, respectively. This object is similar to a data \verb|list|.
+  \item[fiteft.obs]: pandas DataFrame\\
+  Table containing the experimental data.
+  \item[fiteft.cor\_exp]:  pandas DataFrame\\
+  Table containing the correlation matrix data of the measured values provided by the experiment.
+  \item[fiteft.cor\_thep]:  pandas DataFrame\\
+  Table containing the correlation matrix data of theoretical predictions, provided by the user. The default is the identity matrix.
+  \item[fiteft.param]:  pandas DataFrame\\
+  Table containing linear parameterization values, essentially all vectors  $\b a_i^{\text{prod}\top},\b a_i^{\text{decay}\top},\b a_i^{\text{acc}\top}$ stacked together.
+  \item[fiteft.rot] : pandas DataFrame\\
+  Table containing the matrix $\overline{\b M_{\lambda >a}}^\top$.
+  \item[fiteft.Ndf,fiteft.Ddf,fiteft.Adf] : pandas DataFrame\\
+  Tables containing the parameterization matrices $\b{N,D,A}$ for basis $c$.
+  \item[fiteft.Ndf2, fiteft.Ddf2, fiteft.Adf2] : pandas DataFrame\\
+  Tables containing the parameterization matrices $\b{N',D',A'}$ for basis $c'$.
+\end{description}
+
+\textbf{Example}:\\
+Below are some examples of how to use the mentioned data. \\
+We can print the names of the coefficients tin the $\b c'$ basis
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.C2
+Index(['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB', 'c[2]HW-HB-HWB-HDD-uW-uB',
+       'c[3]HW-HB-HWB-HDD-uW-uB', 'c[1]Hu-Hd-Hq(1)', 'c[1]Hl(1)-He',
+       'c[1]Hl(3)-ll0', 'c[1]HG-uG-uH-top', 'c[2]HG-uG-uH-top',
+       'c[3]HG-uG-uH-top'],
+      dtype='object')
+\end{minted}
+Afterwards, access the second parameter (note that parameter 0 is the first parameter)
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.C2[2]
+'c[2]HW-HB-HWB-HDD-uW-uB'
+\end{minted}
+Access parameters 0 and 2 as follow
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.C2[[0,2]]
+Index(['c(3)Hq', 'c[2]HW-HB-HWB-HDD-uW-uB'], dtype='object')
+\end{minted}
+To remove the second parameter and return the list of parameters:
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.C2.drop(a.C2[2])
+Index(['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB', 'c[3]HW-HB-HWB-HDD-uW-uB',
+       'c[1]Hu-Hd-Hq(1)', 'c[1]Hl(1)-He', 'c[1]Hl(3)-ll0', 'c[1]HG-uG-uH-top',
+       'c[2]HG-uG-uH-top', 'c[3]HG-uG-uH-top'],
+      dtype='object')
+\end{minted}
+To select columns 0 and 1, and rows 0 to 5 from the matrix $\b A'$ using numerical indexing
+\begin{minted}[fontsize={\fontsize{8}{8}\selectfont},linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.Adf2.iloc[0:5,[0,1]]
+                                                                           c(3)Hq  c[1]HW-HB-HWB-HDD-uW-uB
+production                         decay   acceptance signature                                           
+gg->H->Bgaga,0-jet,pTH<10GeV       H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,0-jet,10<=pTH<200GeV  H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,1-jet,pTH<60GeV       H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,1-jet,60<=pTH<120GeV  H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,1-jet,120<=pTH<200GeV H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+\end{minted}
+To select columns corresponding to parameters 0 and 1, and rows 0 to 5 from the matrix $\b A'$ using column names (characters), you can do the following
+\begin{minted}[fontsize={\fontsize{8}{8}\selectfont},linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> temp = a.C2[[0,1]]
+>>> temp
+Index(['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB'], dtype='object')
+>>> a.Adf2.loc[:,temp].head()
+                                                                           c(3)Hq  c[1]HW-HB-HWB-HDD-uW-uB
+production                         decay   acceptance signature                                           
+gg->H->Bgaga,0-jet,pTH<10GeV       H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,0-jet,10<=pTH<200GeV  H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,1-jet,pTH<60GeV       H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,1-jet,60<=pTH<120GeV  H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+gg->H->Bgaga,1-jet,120<=pTH<200GeV H->gaga none       CS*BR/(CS_SM*BR_SM)  -0.013                 47.84019
+\end{minted}
+
+
+
+
+\section{Computing function of Fiteft}
+
+\subsection{\text{fiteft.likelihood}}
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+fiteft.likelihood(C_df)
+\end{minted}
+\textbf{Argument:}
+\begin{description}
+  \item[C\_df]: Panda DataFrame\\
+  The table contains $n$ vectors $\b c'^\top$ stacked together, where the column names are parameter names. We specifically use columns that have names matching those in the object \verb|fiteft.Ndf2|.
+ \end{description}
+ \textbf{Return}: \textbf{np.ndarray}\\
+ \indent Returns an array of shape (n,1,1), where $n$ is the number of vectors in \verb|C_df|
+
+ \textbf{Example}:\\
+ To use this function, we need to understand how to initialize a pandas DataFrame \verb|C_df| for the vector $\b c'$.  Below are two examples of how to initialize a pandas DataFrame:\\
+ Cách 1:
+ \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame(np.ones((2,2)), columns = ['c(3)Hq','c[1]Hl(3)-ll0'])
+>>> df
+   c(3)Hq  c[1]Hl(3)-ll0
+0     1.0            1.0
+1     1.0            1.0
+ \end{minted}
+ Cách 2:
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame(np.ones((2,2)), columns = a.C2[[0,6]])
+>>> df
+   c(3)Hq  c[1]Hl(3)-ll0
+0     1.0            1.0
+1     1.0            1.0
+\end{minted}
+Afterwards, you can use the function \verb|fiteft.likelihood| with the parameter as the pandas DataFrame defined as above
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.likelihood(df)
+array([[[1803.67453384]],
+
+       [[1803.67453384]]])
+\end{minted}
+The remaining parameters default to zero. The two numbers imply that the likelihood function is computed twice for the point $[\rm c(3)Hq=1, c[1]Hl(3)-ll0=1]$.
+We can assign a value of 0 to any parameter other than the initial two parameters, and the likelihood function will still return the same value.
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame(np.array([[1,1,0],[1,1,0]]),\
+   columns = ['c(3)Hq','c[1]Hl(3)-ll0','c[1]HW-HB-HWB-HDD-uW-uB'])
+>>> df
+   c(3)Hq  c[1]Hl(3)-ll0  c[1]HW-HB-HWB-HDD-uW-uB
+0       1              1                        0
+1       1              1                        0
+>>> a.likelihood(df)
+array([[[1803.67453384]],
+
+       [[1803.67453384]]])
+\end{minted}
+The order of the parameters can be arranged arbitrarily. The following are the results of $\mathcal{L}(\rm c(3)Hq=0,c[1]Hl(3)-ll0=1)$ and $\mathcal{L}(\rm c(3)Hq=1,c[1]Hl(3)-ll0=0)$ respectively
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame(np.array([[0,1],[1,0]]),\
+   columns = ['c(3)Hq','c[1]Hl(3)-ll0'])
+>>> df
+   c(3)Hq  c[1]Hl(3)-ll0
+0       0              1
+1       1              0
+>>> a.likelihood(df)
+array([[[  52.22424586]],
+
+       [[1911.79581288]]])
+\end{minted}
+Swapping the order of two parameters does not change the value of the likelihood function.
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame(np.array([[1,0],[0,1]]),\
+     columns = ['c[1]Hl(3)-ll0','c(3)Hq'])
+>>> df
+   c[1]Hl(3)-ll0  c(3)Hq
+0              1       0
+1              0       1
+>>> a.likelihood(df)
+array([[[  52.22424586]],
+
+       [[1911.79581288]]])
+  \end{minted}
+
+\subsection{fiteft.l}
+The purpose of this function is to make it easier to enter data without having to enter the names of the parameters each time the likelihood is calculated.
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+fiteft.l(cvecs)
+\end{minted}
+\textbf{Argument:}
+\begin{description}
+  \item[cvecs]: pandas DataFrame or numpy ndarray\\
+  numpy ndarray: Of shape (n, m) representing n vectors $\b c'^\top$ stacked column-wise, where $m$ is the number of coefficients of the vector $\b c'^\top$. The order of parameters in the numpy array will be automatically assigned to the columns of \verb|cvecs|, following the order of parameters in  \verb|fiteft.Ndf2|.\\
+  pandas DataFrame: Similar to the argument of the function \verb|fiteft.likelihood()|.
+ \end{description}
+ \textbf{Return}: \textbf{np.ndarray} with shape (n,1,1)\\
+ \indent Array of shape (n, 1, 1), where $n$ is the number of vectors in \verb|cvecs|.
+ \\[1cm]
+ \textbf{Example}\\
+ To determine the number of parameters involved in computing the likelihood, you can access the columns of the parameterization matrix:
+ \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.C2
+Index(['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB', 'c[2]HW-HB-HWB-HDD-uW-uB',
+       'c[3]HW-HB-HWB-HDD-uW-uB', 'c[1]Hu-Hd-Hq(1)', 'c[1]Hl(1)-He',
+       'c[1]Hl(3)-ll0', 'c[1]HG-uG-uH-top', 'c[2]HG-uG-uH-top',
+       'c[3]HG-uG-uH-top'],
+      dtype='object')
+ \end{minted}
+ The result returned is the parameters involved in fitting the data, corresponding to a total of 10 parameters. To determine the number of parameters, you can print the shape of the parameter matrix:
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.C2.shape
+(10,)
+   \end{minted}
+The returned result indicates that there are 10 parameters in $\b c'$ is 10. From here, you can initialize a numpy ndarray of shape $(n, 10)$ as needed.
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> arr = np.tile([[0],[0.1],[0.2]], (1,10))
+>>> arr
+array([[0. , 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0. ],
+       [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+       [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]])
+\end{minted}
+From here, we can use \verb|arr| as argument for \verb|fiteft.l()|
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> a.l(arr)
+array([[[   39.28929247]],
+
+       [[ 6658.64606328]],
+
+       [[25489.35871156]]])
+\end{minted}
+The approach above will return a value equivalent to the following approach:
+\begin{minted}[fontsize={\fontsize{10}{10}\selectfont},linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> arr = np.tile([[0],[0.1],[0.2]], (1,10))
+>>> df = pd.DataFrame(arr, columns = a.C2)
+>>> df
+   c(3)Hq  c[1]HW-HB-HWB-HDD-uW-uB  ...  c[2]HG-uG-uH-top  c[3]HG-uG-uH-top
+0     0.0                      0.0  ...               0.0               0.0
+1     0.1                      0.1  ...               0.1               0.1
+2     0.2                      0.2  ...               0.2               0.2
+
+[3 rows x 10 columns]
+>>> a.l(df)
+array([[[   39.28929247]],
+
+       [[ 6658.64606328]],
+
+       [[25489.35871156]]])
+\end{minted}
+
+
+\subsection{fiteft.dl}
+This is a function for calculating the derivative $\mathcal{L}(\b c)$.
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+fiteft.dl(cvecs, delta =1.49e-08)
+\end{minted}
+\textbf{Argument:}
+\begin{description}
+  \item[cvecs]: pandas DataFrame or numpy ndarray\\
+  numpy ndarray: Of shape (n, m) representing n vectors $\b c'^\top$ stacked column-wise, where $m$ is the number of coefficients of the vector $\b c'^\top$. The order of parameters in the numpy array will be automatically assigned to the columns of \verb|cvecs|, following the order of parameters in  \verb|fiteft.Ndf2|.\\
+  pandas DataFrame: the same as argument of the function \verb|fiteft.likelihood()|.
+ \end{description}
+ \textbf{Return}: \textbf{np.ndarray} with the shape (n,1,m)\\
+ \indent Array of shape (n, 1, m), where n is the number of vectors in \verb|cvecs| and m is the number of parameters $\b c'$. Returns a list of gradient vectors of the likelihood function with respect to the vectors $\b c'$.
+ \\[1cm]
+ \textbf{Example}\\
+ We will compute the gradient of the likelihood function with respect to the vector $\b c'$ with values set to 0. First, initialize \verb|cvecs| representing the vectors $\b c'$, then use \verb|cvecs| as an argument for the \verb|fiteft.dl| function
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> arr = np.zeros((1,10))
+>>> arr
+array([[0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]])
+>>> a.dl(arr)
+array([[[ 1.74947677e+01,  1.19368262e+03,  4.69186152e-01,
+          4.96926121e+00, -5.59564136e+00,  2.77503991e+00,
+         -1.56736581e+01,  1.22274234e+03, -8.44857583e+00,
+         -8.51474262e+00]]])
+>>> a.dl(arr).shape
+(1, 1, 10)
+\end{minted}
+The above numbers are equivalent to $\frac{\partial \mathcal{L}}{\partial \b c'^\top}|_{c'_i=0} $\\
+We also have another way to input data for the function as follows:
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame([[0,0]], columns = ['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB'])
+>>> df
+   c(3)Hq  c[1]HW-HB-HWB-HDD-uW-uB
+0       0                        0
+>>> a.dl(df)
+array([[[  17.49476769, 1193.68261566]]])
+\end{minted}
+Another way with similar result
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame([[0,0]], columns = a.C2[[0,1]])
+>>> df
+   c(3)Hq  c[1]HW-HB-HWB-HDD-uW-uB
+0       0                        0
+>>> a.dl(df)
+array([[[  17.49476769, 1193.68261566]]])
+\end{minted}
+Not listed values are defaulted to 0, we can switch the position of the vector in the dataframe to get the derivative values also
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame([[0,0]], columns = ['c[1]HW-HB-HWB-HDD-uW-uB','c(3)Hq'])
+>>> df
+   c[1]HW-HB-HWB-HDD-uW-uB  c(3)Hq
+0                        0       0
+>>> a.dl(df)
+array([[[1193.68261566,   17.49476769]]])
+\end{minted}
+We can also calculate the derivatives for many vectors at the same time
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame([[0,0],[0.1,0.1]], columns = a.C2[[0,1]])
+>>> df
+   c(3)Hq  c[1]HW-HB-HWB-HDD-uW-uB
+0     0.0                      0.0
+1     0.1                      0.1
+>>> a.dl(df)
+array([[[1.74947686e+01, 1.19368262e+03]],
+
+       [[6.14279192e+02, 5.29040790e+04]]])
+\end{minted}
+\subsection{fiteft.l\_profile}
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+fiteft.l_profile(cvecs, loc, val)
+\end{minted}
+The function used to calculate the profile likelihood with $m-1$, with $m$ is the number of parameters in the vector $\b c'$. This function is equivalent to $\mathcal{L}(c'_i= \verb|val|,\overline{\b c'}_i) $, where $i =\verb|loc|$. \\[1cm]
+\textbf{Argument:}
+\begin{description}
+  \item[cvecs]: pandas DataFrame or numpy ndarray\\
+  numpy ndarray: It has a shape of (n, m-1), representing n vectors $\overline{\b c'}_i$ stacked column-wise, where $m-1$ is the number of elements of vector $\overline{\b c'}_i^\top$. The order of parameters in the numpy array will automatically match those in \verb|cvecs|, following the order in \verb|fiteft.Ndf2| excluding $i$th coefficient.\\
+  pandas DataFrame: Similar to the argument of the function \verb|fiteft.likelihood()|. Note that this DataFrame does not contain the parameter $c'_i$
+  \item[loc]: \verb|str| or \verb|int| \\
+  \verb|str|: Name of the coefficient, such as \verb|c(3)Hq|\\
+  \verb|int|: Index of the parameter under consideration, starting from 0 as the first parameter.
+  \item[val]: \verb|float| \\
+  Value of the parameter $c'_i$ under consideration.
+  \item[delta]: \verb|float| \\
+  Step size for computing the derivative, defaulting to 1.49e-8.
+ \end{description}
+ \textbf{Return}: \textbf{np.ndarray} with shape (n,1,1)\\
+ \indent Array with shape (n,1,1), where $n$ is number of vectors in \verb|cvecs|
+ \\[1cm]
+ \textbf{Example}\\
+We calculate $\mathcal{L}(c'_i=0.5,\overline{\b c'}_i)$, where $i=$\verb|c(3)Hq| in two ways.\\
+The first method involves using a dataframe
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame([[0],[1]], columns =['c[1]HW-HB-HWB-HDD-uW-uB'])
+>>> df
+   c[1]HW-HB-HWB-HDD-uW-uB
+0                        0
+1                        1
+>>> a.l_profile(df, 'c(3)Hq', 0.5)
+array([[[   511.78960776]],
+
+       [[261073.42566001]]])
+\end{minted}
+The two values above represent $\mathcal{L}(\rm c(3)Hq=0.5,\overline{\b c'}_{c(3)Hq})$, with \verb|c[1]HW-HB-HWB-HDD-uW-uB| assigned to values 0 and 1, respectively, while other parameters default to 0. Using a DataFrame allows flexibility in arranging parameters.
+
+Next, we will use a numpy array as input.
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> arr = np.zeros((2,9))
+>>> arr[1,0]=1
+>>> arr
+array([[0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [1., 0., 0., 0., 0., 0., 0., 0., 0.]])
+>>> a.l_profile(arr, loc = 0, val= 0.5)
+array([[[   511.78960776]],
+
+       [[261073.42566001]]])
+\end{minted}
+or we can create a complete DataFrame simply as follows:
+\begin{minted}[fontsize={\fontsize{10}{10}\selectfont},linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> arr = np.zeros((2,9))
+>>> arr[1,0]=1
+>>> df = pd.DataFrame(arr, columns = a.C2.drop(a.C2[0]))
+>>> df
+   c[1]HW-HB-HWB-HDD-uW-uB  c[2]HW-HB-HWB-HDD-uW-uB  ...  c[2]HG-uG-uH-top  c[3]HG-uG-uH-top
+0                      0.0                      0.0  ...               0.0               0.0
+1                      1.0                      0.0  ...               0.0               0.0
+
+[2 rows x 9 columns]
+>>> a.l_profile(df, a.C2[0], 0.5)
+array([[[   511.78960776]],
+
+       [[261073.42566001]]])
+\end{minted}
+We obtain three identical results, where we set $c'_i$ as the first value - position 0 - (corresponding to \verb|c(3)Hq|) of the vector to be $0.5$.
+
+
+
+
+\subsection{fiteft.dl\_profile}
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+  fiteft.dl_profile(cvecs, loc, val, delta=1.49e-08)
+  \end{minted}
+Function for calculating derivative $\frac{\partial \mathcal{L}(c'_i=\texttt{val},\overline{\b{c}'}_i)}{\partial } $, with $i=\texttt{loc}$
+
+\textbf{Argument:}
+\begin{description}
+  \item[cvecs]: pandas DataFrame or numpy ndarray\\
+  numpy ndarray: Has shape $(n, m-1)$, representing $n$ vectors $\overline{\b c'}_i$ stacked column-wise, $m-1$ is the number of coefficent of $\overline{\b c'}_i^\top$. The order of parameters in the numpy array will automatically match those in \verb|cvecs|, following the order in \verb|fiteft.Ndf2| excluding $i$th coefficient.\\
+  pandas DataFrame: Similar to the argument of the function \verb|fiteft.likelihood()|. Note that this DataFrame does not contain the parameter $c'_i$.
+  \item[loc]: \verb|str| or \verb|int| \\
+  \verb|str|: Name of the coefficient, such as \verb|c(3)Hq|\\
+  \verb|int|: Index of the parameter under consideration, starting from 0 as the first parameter.
+  \item[val]: \verb|float| \\
+  Value of the parameter $c'_i$ under consideration.
+  \item[delta]: \verb|float| \\
+  Step size for computing the derivative, defaulting to 1.49e-8.
+\end{description}
+\textbf{Return}: \textbf{np.ndarray} with shape (n,1,m-1)\\
+\indent Array with shape (n,1,1), where $n$ is number of vectors in \verb|cvecs| and $m-1$ is the number of coefficients of $\overline{\b c'_i}^\top$. Return a list of derivatives of the likelihood function with respect to $\overline{\b c'_i}^\top$ vectors.
+ \\[1cm]
+ \textbf{Example}\\
+ Here, we calculate $\frac{\partial \mathcal{L}(c'_i=0.5,\overline{\b c'}_i)}{\partial \overline{\b c'}_i^\top} $, where $i=$\verb|c(3)Hq|, in two ways.\\
+ First, we use dataframe as input
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> df = pd.DataFrame([[0],[1]], columns =['c[1]HW-HB-HWB-HDD-uW-uB'])
+>>> df
+   c[1]HW-HB-HWB-HDD-uW-uB
+0                        0
+1                        1
+>>> a.dl_profile(df, 'c(3)Hq', 0.5)
+array([[[  2322.82750159]],
+
+       [[518378.25472623]]])
+\end{minted}
+The above two values represent $\frac{\partial \mathcal{L}(\hat{c'}_i,\overline{\b c'}_i)}{\partial \overline{\b c'}_i^\top}|_{\text{c(3)Hq}=0.5}$, where the parameter \verb|c[1]HW-HB-HWB-HDD-uW-uB| is assigned values 0 and 1, with other parameters defaulting to 0. Note that the function returns derivatives only for declared parameters. Using a DataFrame allows flexibility in parameter arrangement.
+
+Next, we use numpy array as input
+\begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> arr = np.zeros((2,9))
+>>> arr[1,0]=1
+>>> arr
+array([[0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [1., 0., 0., 0., 0., 0., 0., 0., 0.]])
+>>> a.dl_profile(arr, loc = 0, val= 0.5)
+array([[[ 2.32282750e+03, -1.91485358e+02,  1.50639485e+01,
+         -1.85706419e+02,  4.26760551e-01, -7.62017694e+01,
+          7.84276547e+02, -3.75906673e-01,  1.47928321e+00]],
+
+       [[ 5.18378259e+05,  2.66560225e+03,  4.41266808e+02,
+         -6.12969642e+02, -1.40475791e+02, -4.58330052e+03,
+          2.38905668e+05, -2.01389912e+03, -1.43328552e+03]]])
+\end{minted}
+We have two visually different results, but if we focus on the first value of each row, we obtain the same result as before where we set $c'_i$ to the first value (position 0) corresponding to \verb|c(3)Hq| in the vector as 0 while other coefficients are defalted to 0.\\
+Another approach is to use a complete dataframe containing two vectors $\overline{\b c'}_i^\top$
+\begin{minted}[fontsize={\fontsize{10}{10}\selectfont},linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+>>> arr = np.zeros((2,9))
+>>> arr[1,0]=1
+>>> df = pd.DataFrame(arr, columns = a.C2.drop(a.C2[0]))
+>>> df
+   c[1]HW-HB-HWB-HDD-uW-uB  c[2]HW-HB-HWB-HDD-uW-uB  ...  c[2]HG-uG-uH-top  c[3]HG-uG-uH-top
+0                      0.0                      0.0  ...               0.0               0.0
+1                      1.0                      0.0  ...               0.0               0.0
+
+[2 rows x 9 columns]
+>>> a.dl_profile(df, a.C2[0], 0.5)
+array([[[ 2.32282750e+03, -1.91485358e+02,  1.50639485e+01,
+         -1.85706419e+02,  4.26760551e-01, -7.62017694e+01,
+          7.84276547e+02, -3.75906673e-01,  1.47928321e+00]],
+
+       [[ 5.18378255e+05,  2.66560225e+03,  4.41266808e+02,
+         -6.12969642e+02, -1.40475791e+02, -4.58330052e+03,
+          2.38905668e+05, -2.01389912e+03, -1.43328552e+03]]])
+\end{minted}
+
+
+ \clearpage
+%  \subsection{Example}
+%  Ở phần ví dụ này, chúng tôi sẽ ví dụ về việc sử dụng FITEFT, với một kết quả cụ thể là \verb|ATLAS-CONF-2020-053|
+%  đầu tiên chúng ta \verb|import| những thư viện cần thiết là \verb|numpy,panda,Fieft| và khởi tạo đối tượng Fiteft
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> import Fiteft
+% >>> import pandas as pd
+% >>> import numpy as np
+% >>> a = Fiteft.fiteft(experiment='ATLAS-CONF-2020-053')
+% Your input to the likelihood function is a DataFrame with one of these colums:
+% ['c(3)Hq', 'c[1]HW-HB-HWB-HDD-uW-uB', 'c[2]HW-HB-HWB-HDD-uW-uB',
+%  'c[3]HW-HB-HWB-HDD-uW-uB', 'c[1]Hu-Hd-Hq(1)', 'c[1]Hl(1)-He',
+%   'c[1]Hl(3)-ll0', 'c[1]HG-uG-uH-top', 'c[2]HG-uG-uH-top',
+%    'c[3]HG-uG-uH-top']
+% \end{minted}
+
+% Chúng ta sẽ tìm cực tiểu hàm likelihood trên với sự trợ giúp của hàm \verb|minimize| của thư viện \verb|scipy|. input của hàm \verb|minimize(fun)| có một điều đáng lưu ý là:\\
+% \verb|fun| là hàm số với giá trị trả lại là dạng dữ liệu \verb|float|, và giá trị nhập vào là numpy array with shape (n,) với n là số tham số. Nhưng vì hàm like lihood của ta có dạng \verb|x(1,n) -> fx(n,1,1)|, nên chúng ta sẽ phải thực hiện biến đổi sau\\
+%   \verb|x(n,)->|$\overbrace{\texttt{x(1,n)->fx(n,1,1)}}^{\verb|fiteft.l|}$\verb|->fx(float)|\\[0.5cm]
+% Chúng ta làm vậy thông qua hàm \verb|lambda|\\
+% \verb|lambda x: a.l(x.reshape(1,-1))[0,0,0]|
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> x = np.zeros(10)
+% >>> x.shape
+% (10,)
+% >>> fun = lambda x: a.l(x.reshape(1,-1))[0,0,0]
+% >>> fun(x)
+% 39.289292468722365
+% \end{minted}
+% Và thế là chúng ta đã định nghĩa được hàm số mới sử dụng array với input có hình dang (n,) và output là \verb|float| để bỏ vào hàm \verb|minmize|, . Việc tiếp theo là cực tiểu hóa hàn \verb|fun|, chỉ với câu lệnh đơn giản sau
+
+
+% \begin{minted}[breaklines,linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> from scipy.optimize import minimize
+% >>> import time
+% >>> start = time.time();\
+% ... res = minimize(fun = fun, x0 = np.zeros(10), options = {'gtol' : 1e-3});\
+% ... end = time.time();\
+% ... print(end - start)
+
+% 7.211748838424683
+% >>> 
+% >>> res
+%   message: Optimization terminated successfully.
+%   success: True
+%    status: 0
+%       fun: 27.39150232188503
+%         x: [-5.262e-02 -1.140e-02  2.144e-01 -3.808e+00 -6.253e-01
+%              1.838e+01 -1.392e+00  4.151e-03  6.644e-02  8.962e-01]
+%       nit: 32
+%       jac: [ 9.537e-07  7.486e-05  3.099e-06  3.099e-06  2.384e-07
+%              4.768e-07 -1.192e-06  3.295e-04  2.384e-07 -1.669e-06]
+%  hess_inv: [[ 2.090e-03 -2.291e-05 ...  1.652e-03  1.486e-03]
+%             [-2.291e-05  1.063e-04 ...  1.247e-03  8.388e-04]
+%             ...
+%             [ 1.652e-03  1.247e-03 ...  5.208e-02  1.561e-02]
+%             [ 1.486e-03  8.388e-04 ...  1.561e-02  5.020e-01]]
+%      nfev: 407
+%      njev: 37
+% \end{minted}
+% Chúng ta có hiện thời gian để tìm cực tiểu này là khoảng 7 giây với điểm bắt đầu là tất cả tham số ở giá trị 0. Và chúng ta thấy được là hàm verb|minimize| đã trả lại kết quả cực tiểu của hàm likelihood là $\mathcal{L}(\hat{\b c})=27.3915$ với giá trị $\hat{\b c}$ là \verb|res.x|, $\frac{\partial \mathcal{L}}{\partial \b c'^\top}$ là \verb|res.jac|, $\frac{\partial^2 \mathcal{L}}{\partial c' \partial \b c'^\top}$ là \verb|res.hess_inv|.
+
+% Chúng ta có thể cải thiện hàm cực tiểu hóa một cách đáng kể bằng cách bổ sung cho nó hàm tính đạo hàm của \verb|fiteft|, tôi đặt nó là \verb|fun2|, với cách thiết lập giống như hàm likelihood như ở trên.
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> fun2 = lambda x: a.dl(x.reshape(1,-1))[0,0]
+% >>> fun2(np.zeros(10))
+% array([ 1.74947677e+01,  1.19368262e+03,  4.69186152e-01,  4.96926121e+00,
+%        -5.59564136e+00,  2.77503991e+00, -1.56736581e+01,  1.22274234e+03,
+%        -8.44857583e+00, -8.51474262e+00])
+% \end{minted}
+% lặp lại bước tính cực tiểu, nhưng bây giờ chúng tôi bổ sung cho hàm cực tiểu hóa này một hàm để tính đạo hàm.
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> start = time.time();\
+% ... res = minimize(fun = fun, x0 = np.zeros(10), jac = fun2, options = {'gtol' : 1e-3});\
+% ... end = time.time();\
+% ... print(end - start)
+% 1.7001349925994873
+% >>> res
+%   message: Optimization terminated successfully.
+%   success: True
+%    status: 0
+%       fun: 27.39150232185513
+%         x: [-5.262e-02 -1.140e-02  2.144e-01 -3.808e+00 -6.253e-01
+%              1.838e+01 -1.392e+00  4.151e-03  6.644e-02  8.962e-01]
+%       nit: 32
+%       jac: [ 0.000e+00  6.867e-05  5.722e-06  4.769e-06  0.000e+00
+%              4.769e-07 -1.431e-06  4.247e-04  2.384e-07 -1.669e-06]
+%  hess_inv: [[ 2.087e-03 -2.219e-05 ...  1.663e-03  1.502e-03]
+%             [-2.219e-05  1.059e-04 ...  1.244e-03  8.366e-04]
+%             ...
+%             [ 1.663e-03  1.244e-03 ...  5.207e-02  1.564e-02]
+%             [ 1.502e-03  8.366e-04 ...  1.564e-02  5.021e-01]]
+%      nfev: 37
+%      njev: 37
+% \end{minted}
+% Và thời gian tìm cực tiểu được cải thiện đáng kể, từ 7 giây xuống còn 1.7 giây. Và chúng tôi cũng chỉ đang tính cực tiểu bằng đạo hàm số nhưng tận dụng sức mạnh của thư viện numpy, chúng tôi đã rút ngắn thời gian tính toán xuống hơn 3 lần. Nếu sử dụng kết quả đạo hàm giải tích thì thời gian tính toán trên có thể được rút ngắn hơn nhiều lần, ở phiên bản hiện tại của Fiteft chưa có hàm tính đạo hàm giải tích và sẽ xuất hiện ở những cải tiến sau này.
+
+% Sau khi tìm được $\hat{\b c'}$, chúng ta có thể bắt đầu tính profile likelihood $\mathcal{L}(c'_i,\hat{\overline{\b c'}}_i)$
+% chúng ta sẽ phải viết một hàm số mới để bỏ vào hàm \verb|minimize|, hàm số này sẽ lấy một vector with shape (m-1,) với m-1 là số tham số của $\overline{\b c'}_i$ và trả lại kết quả là một \verb|float|:\\
+% \verb|x(n,)->|$\overbrace{\texttt{x(1,n)->fx(n,1,1)}}^{\verb|fiteft.l_profile|}$\verb|->fx(float)|\\[0.5cm]\\
+
+% Dưới đây là ví dụ của hàm $\mathcal{L}(c'_i=0,\overline{\b c'}_i)$ với $i$ là \verb|c(3)Hq|.
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> fun = lambda x: a.l_profile(x.reshape(1,-1), loc='c(3)Hq', val=0)[0,0,0]
+% >>> fun(np.zeros(9))
+% 39.289292468722365
+% \end{minted}
+% Cách thứ hai
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> fun = lambda x: a.l_profile(x.reshape(1,-1), loc=0, val=0)[0,0,0]
+% >>> fun(np.zeros(9))
+% 39.289292468722365
+% \end{minted}
+% Bỏ hàm vừa rồi vào hàm \verb|minimize| để cực tiểu hóa theo các biến còn lại
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> start = time.time();\
+% ... res = minimize(fun = fun, x0 = np.zeros(9), options = {'gtol' : 1e-3});\
+% ... end = time.time();\
+% ... print(end - start)
+% 11.470034837722778
+% >>> res
+%   message: Desired error not necessarily achieved due to precision loss.
+%   success: False
+%    status: 2
+%       fun: 28.060463368459125
+%         x: [-1.202e-02  5.068e-01 -3.097e+00 -4.279e-01  1.282e+01
+%             -1.250e+00  3.262e-03  1.057e-01  9.461e-01]
+%       nit: 28
+%       jac: [-1.547e-03 -3.624e-05 -2.098e-05 -1.669e-06 -3.576e-06
+%              3.719e-05 -3.636e-04  2.623e-06  1.264e-05]
+%  hess_inv: [[ 6.471e-05 -1.143e-03 ...  6.899e-04 -1.398e-04]
+%             [-1.143e-03  4.923e-02 ... -3.942e-03  1.767e-02]
+%             ...
+%             [ 6.899e-04 -3.942e-03 ...  4.058e-02 -1.728e-03]
+%             [-1.398e-04  1.767e-02 ... -1.728e-03  3.810e-01]]
+%      nfev: 752
+%      njev: 74
+% \end{minted}
+% Chúng ta có hiện thời gian để tìm cực tiểu này là khoảng 11 giây với điểm bắt đầu là tất cả tham số ở giá trị 0, và tham số \verb|c(3)Hq| được gán giá trị 0. Và chúng ta thấy được là hàm \verb|minimize| đã trả lại kết quả cực tiểu của hàm likelihood là $\mathcal{L}(c'_i=0,\hat{\overline{\b c'}_i})=28.06$ với giá trị $\hat{\overline{\b c}_i}$ là \verb|res.x|, $\frac{\partial \mathcal{L}(c_i=0)}{\partial \overline{ \b c'}_i^\top}$ là \verb|res.jac|, $\frac{\partial^2 \mathcal{L}}{\partial \overline{ \b c'}_i \partial \overline{ \b c'}_i^\top}$ là \verb|res.hess_inv|.
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+% >>> fun2 = lambda x: a.dl_profile(x.reshape(1,-1), loc='c(3)Hq', val=0)[0,0];
+% >>> start = time.time();\
+% ... res = minimize(fun = fun, x0 = np.zeros(9), jac = fun2, options = {'gtol' : 1e-3});\
+% ... end = time.time();\
+% ... print(end - start)
+% 7.699192523956299
+% >>> res
+%   message: Desired error not necessarily achieved due to precision loss.
+%   success: False
+%    status: 2
+%       fun: 28.060463368387115
+%         x: [-1.202e-02  5.068e-01 -3.097e+00 -4.279e-01  1.282e+01
+%             -1.250e+00  3.262e-03  1.057e-01  9.461e-01]
+%       nit: 27
+%       jac: [-1.716e-03 -3.934e-05 -2.289e-05 -1.192e-06 -3.577e-06
+%              4.173e-05 -4.180e-04  2.861e-06  1.550e-05]
+%  hess_inv: [[ 1.776e-04 -3.577e-03 ...  1.246e-03  4.124e-03]
+%             [-3.577e-03  1.015e-01 ... -1.613e-02 -7.444e-02]
+%             ...
+%             [ 1.246e-03 -1.613e-02 ...  4.311e-02  1.913e-02]
+%             [ 4.124e-03 -7.444e-02 ...  1.913e-02  5.446e-01]]
+%      nfev: 91
+%      njev: 79
+%   \end{minted}
+
+% \begin{minted}[linenos,numbersep=5pt,frame=lines,framesep=2mm]{python}
+%   >>> start = time.time();\
+%   ... res = minimize(fun = fun, x0 = np.zeros(9), options = {'gtol' : 1e-3});\
+%   ... end = time.time();\
+%   ... print(end - start)
+%   11.127542734146118
+%   >>> res
+%   \end{minted}
+\end{document}
