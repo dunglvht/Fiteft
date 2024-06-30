@@ -1,6 +1,8 @@
 # Fiteft
 
-Fiteft (**Fit** **e**ffective **f**ield **t**heory) is a Python package for calculating approximated likelihood function of Standard Model Effective Field Theory (SMEFT) parameters using experimental data. We also provide a method for calculating best-fit and confident interval of SMEFT parameters  
+Fiteft (**Fit** **e**ffective **f**ield **t**heory) is a Python package for calculating approximated likelihood function of Standard Model Effective Field Theory (SMEFT) parameters using experimental data. We also provide a method for calculating the best-fit value and confident intervals of SMEFT parameters. 
+
+Fiteft is distributed under the GNU General Public License (GPL) version 3 (see the LICENSE file). This ensures that the source code will be available to users, grants them the freedom to use and modify the program and sets out the conditions under which it can be redistributed.
 
 # Requirements:
 
