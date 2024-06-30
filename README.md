@@ -11,6 +11,7 @@ WARNING: This is the first beta version, which has NOT been well tested. Use it 
 * Python 3.10 (or 3.X)
 * numpy (preferable newest version)
 * pandas (preferable newest version)
+* re
 
 Optional, for the minimization of the likelihood functions
 
@@ -26,12 +27,11 @@ We provide a step-by-step intruction via a Google colab notebook. User can run t
 Full instruction is in the example section.
 
 ## GitHub codespace
-We also provide a ready-to-run, line-by-line jupyter notebook `example.ipynb`. You can either run it on your machine, or run it via GitHub code space
+We also provide a ready-to-run, line-by-line jupyter notebook `examples/example.ipynb`. You can either run it on your machine, or run it via GitHub code space
 1. Go to the [repository page](https://github.com/dunglvht/Fiteft)
 2. Click `Code> Create codespace on master`
-3. Open `example.ipynb` via left pannel which will open a jupyter notebook on VScode on GitHub codespace, you then can run the notebook directly on your browser.
+3. Open `examples/example.ipynb` via left pannel which will open a jupyter notebook on VScode on GitHub codespace, you then can run the notebook directly on your browser.
 
-<img src="markdown_pngs/codespace.png" alt="drawing" width="400"/>
 
 ## Using Python script
 You first need to clone the Fiteft project by running this command on your terminal
@@ -67,7 +67,7 @@ array([[[1803.67453384]]])
 
 Detailed usage is provided via jupyter notebooks. 
 
-Full description of the file structures, functions is detailed in `mannual.pdf` file.
+Full description of the file structures, functions is detailed in `doc/manual.pdf` file.
 
 Full description of the physics will be soon provided after I finished defending my thesis.
 
