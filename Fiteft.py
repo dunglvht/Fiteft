@@ -22,7 +22,7 @@ class fiteft:
         self.obs = pd.read_csv(f'{self.dir}/observable.csv', index_col=[0,1,2,3]).bfill(axis=1)
         if 'central_SM' not in self.obs.columns:
             self.obs['central_SM'] = 1
-        self.cor_exp = pd.read_csv(f'{self.dir}/correlation.csv',index_col=[0,1],header =[0,1]).loc[pd.MultiIndex.from_frame(self.obs.index.to_frame()[['production','decay']])]
+        self.cor_exp = pd.read_csv(f'{self.dir}/correlation.csv',index_col=[0,1],header =[0,1]).loc[pd.MultiIndex.from_frame(self.obs.index.to_frame()[['production','decay']]),pd.MultiIndex.from_frame(self.obs.index.to_frame()[['production','decay']])]
         self.cor_theo = (pd.read_csv(f'{self.dir}/correlation_theory.csv',index_col=[0,1],header =[0,1]) if os.path.isfile(f'{self.dir}/correlation_theory.csv') else np.identity(self.obs.shape[0]))
         self.param = pd.read_csv(f'{self.dir}/parametrization.csv',index_col=0, header = 0).fillna(0)
         self.rot =  (pd.read_csv(f'{self.dir}/rotate.csv',index_col=0) if os.path.isfile(f'{self.dir}/rotate.csv') else None)
